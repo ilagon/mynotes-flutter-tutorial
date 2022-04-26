@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/services/crud/notes_service.dart';
 
-import '../constants/routes.dart';
-import '../enums/menu_actions.dart';
+import '../../constants/routes.dart';
+import '../../enums/menu_actions.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -34,6 +34,13 @@ class _NotesViewState extends State<NotesView> {
       appBar: AppBar(
         title: const Text("Your notes"),
         actions: [
+          IconButton(
+            onPressed: () {
+              //pushNamed will render a new view on top of a previous view
+              Navigator.of(context).pushNamed(newNoteRoute);
+            },
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton<MenuActions>(
             onSelected: (value) async {
               switch (value) {
@@ -41,6 +48,7 @@ class _NotesViewState extends State<NotesView> {
                   final shouldLogout = await showLogoutDialog(context);
                   if (shouldLogout) {
                     await AuthService.firebase().logOut();
+                    //pushNamedAndRemoveUntil will render a new view and remove the previous view
                     Navigator.of(context)
                         .pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   }
