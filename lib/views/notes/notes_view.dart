@@ -36,7 +36,7 @@ class _NotesViewState extends State<NotesView> {
         actions: [
           IconButton(
             onPressed: () {
-              //pushNamed will render a new view on top of a previous view
+              //pushNamed will render a new screen on top of a previous screen
               Navigator.of(context).pushNamed(newNoteRoute);
             },
             icon: const Icon(Icons.add),
@@ -76,6 +76,7 @@ class _NotesViewState extends State<NotesView> {
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
+                    case ConnectionState.active:
                       return const Text("Waiting for all notes...");
                     default:
                       return const CircularProgressIndicator();
